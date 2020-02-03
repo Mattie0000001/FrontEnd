@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <script>
+        let str = "<div id='1'>asvasdv<br>yes</br>pig<br>pig</div>";
+        let patt1 = /<\w+>(.*?)<\/\w+>/;
+        let patt2 = /<div id='1'>(.*)<\/div>/;
+        let patt3 = /<div id='1'>(.*?)<\/div>/;
+
+        console.log(str.match(patt1));
+        console.log(str.match(patt2));
+        console.log(str.match(patt3));
+    </script>
+    <p id = '1'></p>
+</body>
+</html>
+

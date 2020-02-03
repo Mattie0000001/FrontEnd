@@ -1,0 +1,28 @@
+* {
+    text-align: center;
+    font-size: 70px;
+}
+
+#box1 {
+    background: rgb(233, 166, 166);
+    height: 200px;
+    width: 100px;
+    transition: width 2s;
+    -webkit-transition: width 2s;
+}
+
+#box1:hover {
+    width: 300px;
+}
+
+#box2 {
+    animation: myfirst 3s;
+    animation-iteration-count: infinite;
+}
+
+
+@keyframes myfirst {
+  50% {font-size: smaller}
+  80% {font-size: larger;}
+  100% {opacity: 0;}
+}

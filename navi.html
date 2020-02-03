@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>导航栏</title>
+  <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+      }
+      li a {
+          float: left;
+      }
+      a:link, a:visited {
+        font-weight: bold;
+        color:rgb(64, 146, 119);
+        background: rgb(50, 185, 129);
+        width: 120px;
+        text-align: center;
+        padding: 4px;
+        text-decoration: none;
+      }
+      li a:link, li a:visited {
+        display: block;
+      }
+      li a:hover, li a:active {
+        background: rgb(15, 53, 32);
+      }
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .dropdown_content {
+        display: none;
+        position: relative;
+      }
+      .dropdown:hover .dropdown_content {
+        display: block;
+      }
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a href="#home">主页</a></li>
+    <li><a href="#news">新闻</a></li>
+    <li><a href="#contact">联系</a></li>
+    <li class="dropdown"><a href="#about">关于</a>
+      <div class="dropdown_content">
+          <a href="#us">我们</a><br>
+          <a href="#more">更多</a>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
