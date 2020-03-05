@@ -1,0 +1,356 @@
+@media screen and (min-width:425px) {
+  html {
+    font-size: 100px;
+  }
+}
+@media screen and (max-width:425px) {
+  html {
+    font-size: 27.77vw;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+#sell_content {
+  display: none;
+}
+/*tab栏*/
+#box0 {
+  height: 0.6rem;
+  font-family: '黑体 bold';
+  background: #28AEFA;
+  color: white ;
+  margin: 0;
+  padding: 0;
+  width: 3.6rem;
+  display: flex;
+  justify-content: center;
+}
+#line_move {
+  position: absolute;
+  left: 0.52rem;
+  top: 0.48rem;
+}
+#box0 span {
+  margin: auto;
+  padding: 0;
+}
+.showing {
+  font-size: 0.2rem;
+}
+.other {
+  font-size: 0.16rem;
+}
+
+/*状态栏*/
+.box1 {
+  height: 0.4rem;
+  font-family: "Arial Normal";
+  margin: 0;
+  padding: 0;
+  width: 3.6rem;
+  display: flex;
+  justify-content: center;
+}
+.state {
+  margin: 0.1rem auto 0;
+  font-size: 0.16rem;
+}
+.focus {
+  color: #28AEFA;
+  border-bottom: 2px solid #28AEFA;
+}
+.line_under_state {
+  width: 3.3rem;
+  border: 0.5px solid #28AEFA;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/*导航栏*/
+#nav {
+  position: fixed;
+  bottom: 0;
+  width: 3.6rem;
+  height: 0.53rem;
+  font-size: 0.24rem;
+}
+#nav a {
+  display: block;
+  float: left;
+  text-decoration: none;
+  background: white;
+  color: #2BAFEA;
+  width: 1.2rem;
+  height: 0.53rem;
+  margin-left: -0.025rem;
+  line-height: 0.53rem;
+  text-align: center;
+  border: 1px solid #2BAFEA;
+}
+#nav #order {
+  background: #2BAFEA;
+  color: white;
+}
+
+/*主体内容*/
+/*整体*/
+.content {
+  margin: 0;
+  display: grid;
+  grid-template-rows: repeat(3, 1.7rem);
+}
+ul {
+  padding-left: 0;
+}
+.content li {
+  width: 3rem;
+  height: 1.7rem;
+  margin: auto;
+  margin-top: 0.2rem;
+  list-style: none;
+}
+/*两列布局*/
+li .firstcolumn {
+  width: 1.3rem;
+  float: left;
+}
+li .details {
+  width: 1.7rem;
+  float: right;
+}
+li img {
+  float: left;
+}
+/*图书信息*/
+.details span, .details input{
+  display: block;
+  padding: 0;
+  margin-left: 0;
+  position: relative;
+  top: -0.08rem;
+}
+/*按钮*/
+.shape {
+  float: left;
+  height: 0.24rem;
+  border: 1px solid #28AEFA;
+  border-radius: 5px;
+  background: #28AEFA;
+  color: #ffffff;
+  font-size: 0.13rem;
+  margin-right: 0.05rem;
+  margin-top: 0.05rem;
+}
+.sell_ensure_btn {
+  width: 0.91rem;
+}
+.sell_resell_btn {
+  width: 0.66rem;
+}
+.buy_notthis_btn {
+  width: 0.66rem;
+}
+.sell_withdraw_btn {
+  width: 0.5rem;
+}
+.buy_check_btn {
+  width: 0.66rem;
+}
+.buy_mark_btn {
+  width: 0.66rem;
+}
+
+/*文字设定*/
+img {
+  font-size: 0.2rem;
+}
+.bookname {
+  font-size: 0.24rem;
+  font-family: "黑体 bold";
+  font-weight: 700;
+  line-height: 0.4rem;
+}
+.price {
+  font-size: 0.16rem;
+  color: #FF0000;
+  line-height: 0.3rem;
+}
+.bookstate {
+  font-size: 0.14rem;
+}
+.hint_mark {
+  font-size: 0.14rem;
+  font-family: "Arial Normal";
+}
+
+/*弹窗*/
+.pop_up {
+  display: none;
+}
+/*"不再购买"弹窗*/
+#notbuy_pop {
+  position: absolute;
+  left: 0.63rem;
+  top: 2.5rem;
+  width: 2.43rem;
+  height: 1.15rem;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background: #ffffff;
+  font-size: 0.14rem;
+  text-align: center;
+  overflow: hidden;
+}
+#notbuy_row1 {
+  background: #28aefa;
+  height: 0.27rem;
+}
+#notbuy_row1 img {
+  float: right;
+  position: relative;
+  right: 0.05rem;
+  top: 0.03rem;
+  transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+#notbuy_text {
+  position: relative;
+  left: 0.05rem;
+  top: 0.22rem;
+  text-align: left;
+}
+.notbuy_btn {
+  width: 0.66rem;
+  height: 0.26rem;
+  position: relative;
+  top: 0.32rem;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background: #28AEFA;
+  color: white;
+}
+
+/*“评分”弹框*/
+#mark_pop {
+  position: absolute;
+  left: 0.3rem;
+  top: 2.2rem;
+  width: 3rem;
+  height: 1.49rem;
+  font-size: 0.16rem;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#mark_row1 {
+  height: 0.21rem;
+  background: #28AEFA;
+  color: white;
+  padding-top: 0.085rem;
+  padding-bottom: 0.085rem;
+}
+#mark_row1 img {
+  position: relative;
+  right: 0.05rem;
+  top: -0.02rem;
+  float: right;
+  transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+#star img {
+  margin:0.1rem 0.08rem -0.08rem;
+}
+#mark_btn {
+  position: relative;
+  top: 0.3rem;
+  left: 1.2rem;
+  width: 0.5rem;
+  height: 0.23rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #28AEFA;
+  color: #ffffff;
+}
+
+/*卖书列表弹窗公共*/
+.sell_pop {
+  position: absolute;
+  left: 0.24rem;
+  top: 2.35rem;
+  width: 3rem;
+  height: 1.7rem;
+  border: 1px solid #000000;
+  font-size: 0.24rem;
+  background: #ffffff;
+  text-align: center;
+}
+.sell_pop img {
+  position: absolute;
+  right: 0.07rem;
+  top: 0.07rem;
+}
+.sell_pop span {
+  line-height: 1.15rem;
+}
+.sell_pop_btn {
+  width: 0.85rem;
+  height: 0.32rem;
+  line-height: 0.35rem;
+  border: none;
+  background: #28AEFA;
+  color: #ffffff;
+  font-size: 0.13rem;
+}
+/*下架成功 弹窗*/
+#withdraw_succeed {
+  position: absolute;
+  left: 0.81rem;
+  top: 2.21rem;
+  width: 1.85rem;
+  height: 1.02rem;
+  font-family: '黑体';
+  font-size: 0.24rem;
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+#withdraw_succeed img{
+  float: right;
+  position: relative;
+  top: 0.07rem;
+  right: 0.07rem;
+}
+#withdraw_succeed span {
+  line-height: 1.02rem;
+  margin-left: 0.4rem;
+}
+
+/*加载失败的弹窗*/
+#error_pop {
+  position: absolute;
+  left: 0.81rem;
+  top: 2.21rem;
+  width: 1.5rem;
+  height: 0.5rem;
+  font-family: '黑体';
+  font-size: 0.1rem;
+  border: 1px solid #000000;
+  background: #ffffff;
+  text-align: center;
+}
+#error_pop img {
+  float: right;
+  position: relative;
+  top: 0.05rem;
+  right: 0.05rem;
+}
+#error_pop span {  
+  line-height: 0.5rem;
+}

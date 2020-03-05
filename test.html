@@ -8,20 +8,55 @@
 </head>
 
 <body>
-    <style>
-       #circle {
-         border-radius: 50%;
-         border: 1px solid salmon;
-         width : 50px;
-         height: 50px;
-         padding: 0;
-         margin: 0;
-       }
-    </style>
-
-    <div id="cirle"></div>
-    
     <script>
+        let a = [
+          {
+            bName : "a",
+            price : "1"
+          },
+          {
+            bName : "b",
+            price : "2"
+          }
+        ]
+        let aa = a[0];
+       // let bb = JSON.parse(aa)
+        let aa1 = aa.bName;
+       // let aa2 = bb.bName
+        console.log("aa1"+ aa1)
+       // console.log("bb"+bb)
+       console.log("type"+typeof(a))
+       for (let i = 0; i < a.length; i++) {
+         console.log(i)
+         console.log(a[i])
+       }
+
+       let m = {
+         "mtt" : [
+           {
+             "name" : "m",
+             "po" : "2"
+           },
+           {
+             "name" : "t",
+             "po" : "2"
+           },
+           {
+             "name" : "t",
+             "po" : "e"
+           }
+         ]
+       }
+       let thisb = m.mtt;
+       let num = thisb.length;
+       for (let i = 0; i < num; i++) {
+         let thisbb = thisb[i]
+         console.log(i)
+         console.log(thisbb)
+       }
+ 
+
     </script>
 </body>
+
 </html>

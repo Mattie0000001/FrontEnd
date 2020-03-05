@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>订单（混合）</title>
+    <meta http-equiv="content-type" content="text/html" ; charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="./order/order.css">
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+
+<body>
+    <!--tab栏-->
+    <div id="box0">
+        <span id="buy_list" class="showing">买书列表</span>
+        <span id="sell_list" class="other">卖书列表</span>
+        <img id="line_move" width="85px" height="5px" src="./order/image_order/line_move.png">
+    </div>
+
+    <!--买书-->
+    <div id="buy_content">
+        <!--状态栏-->
+        <div class="box1">
+            <span id="buy_all" class="state focus">&nbsp;全部&nbsp;</span>
+            <span id="buy_marketing" class="state">交易中</span>
+            <span id="buy_available" class="state">可购买</span>
+            <span id="buy_none" class="state">已下架</span>
+            <span id="buy_done" class="state">已完成</span>
+        </div>
+        <div class="line_under_state"></div>
+
+        <!--主要页面内容-->
+        <!--书的一个demo-->
+        <ul id="buyall_content" class="content"></ul>
+
+        <!--弹窗-->
+        <!--“不买这本”弹窗-->
+        <div id="notbuy_pop" class="pop_up">
+            <div id="notbuy_row1"><img class="close_btn" height="17px" width="17px" src="./order/image_order/close_btn.png"><br></div>
+            <div id="notbuy_text">&nbsp;&nbsp;您确定不再购买这本书吗?</div>
+            <input id="notbuy_yes" class="notbuy_btn" type="button" value="确定">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input class="notbuy_btn cancell" type="button" value="我再想想">
+        </div>
+
+        <!--“评分”弹窗-->
+        <div id="mark_pop" class="pop_up">
+            <div id="mark_row1">&nbsp;&nbsp;您要为【<span id="mark_bookname"></span>】打多少分呢?
+                <img class="close_btn" height="17px" width="17px" src="./order/image_order/close_btn.png"></div>
+            <div id="star">
+                <img id="two" height="40px" width="40px" src="./order/image_order/star.png">
+                <img id="four" height="40px" width="40px" src="./order/image_order/star.png">
+                <img id="six" height="40px" width="40px" src="./order/image_order/star.png">
+                <img id="eight" height="40px" width="40px" src="./order/image_order/star.png">
+                <img id="ten" height="40px" width="40px" src="./order/image_order/star.png">
+            </div>
+            <div><input id="mark_btn" type="button" value="确定"></div>
+        </div>
+    </div>
+    <!--end "buy_content"-->
+
+    <!--卖书-->
+    <div id="sell_content">
+        <!--状态栏-->
+        <div class="box1">
+            <span id="sell_all" class="state focus">&nbsp;全部&nbsp;</span>
+            <span id="sell_marketing" class="state">交易中</span>
+            <span id="sell_available" class="state">可购买</span>
+            <span id="sell_done" class="state">已售出</span>
+        </div>
+        <div class="line_under_state"></div>
+
+        <!--主要页面内容-->
+        <!--demo-->
+        <ul id="sellall_content" class="content"></ul>
+
+        <!--弹窗-->
+        <!--“确认交易成功”弹窗-->
+        <div id="ensure_pop" class="pop_up sell_pop">
+            <div><img class="close_btn" height="22px" width="22px" src="./order/image_order/close.png"></div>
+            <span>确认交易成功？</span>
+            <div>
+                <input id="ensure_yes" class="sell_pop_btn" type="button" value="确认"> &nbsp;&nbsp;&nbsp;
+                <input class="sell_pop_btn cancell" type="button" value="取消">
+            </div>
+        </div>
+        <!--“卖给别人”弹窗-->
+        <div id="change_pop" class="pop_up sell_pop">
+            <div><img class="close_btn" height="22px" width="22px" src="./order/image_order/close.png"></div>
+            <span>确认取消交易？</span>
+            <div>
+                <input id="change_yes" class="sell_pop_btn" type="button" value="确认"> &nbsp;&nbsp;&nbsp;
+                <input class="sell_pop_btn cancell" type="button" value="取消">
+            </div>
+        </div>
+        <!--“下架”弹窗-->
+        <div id="withdraw_pop" class="pop_up sell_pop">
+            <div><img class="close_btn" height="22px" width="22px" src="./order/image_order/close.png"></div>
+            <span>确认需要下架？</span>
+            <div>
+                <input id="withdraw_yes" class="sell_pop_btn " type="button" value="确认"> &nbsp;&nbsp;&nbsp;
+                <input class="sell_pop_btn cancell" type="button" value="取消">
+            </div>
+        </div>
+        <!--“下架成功”弹窗-->
+        <div id="withdraw_succeed" class="pop_up">
+            <div><img class="close_btn" height="22px" width="22px" src="./order/image_order/close.png"></div>
+            <span>下架成功</span>
+        </div>
+    </div>
+    <!--end "sell_content"-->
+
+    <!--加载失败的弹窗-->
+    <div id="error_pop" class="pop_up">
+        <img class="close_btn" height="12px" width="12px" src="./order/image_order/close.png">
+        <span>加载失败！请重试...</span>
+    </div>
+
+    <!--导航栏-->
+    <div id="nav">
+        <a href="./home.html" id="home">首页</a>
+        <a href="./order.html" id="order">订单</a>
+        <a href="./my.html" id="my">我的</a>
+    </div>
+
+    <!--end-->
+    <script src="./order/order.js"></script>
+</body>
+
+</html>
