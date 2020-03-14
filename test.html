@@ -8,55 +8,18 @@
 </head>
 
 <body>
-    <script>
-        let a = [
-          {
-            bName : "a",
-            price : "1"
-          },
-          {
-            bName : "b",
-            price : "2"
-          }
-        ]
-        let aa = a[0];
-       // let bb = JSON.parse(aa)
-        let aa1 = aa.bName;
-       // let aa2 = bb.bName
-        console.log("aa1"+ aa1)
-       // console.log("bb"+bb)
-       console.log("type"+typeof(a))
-       for (let i = 0; i < a.length; i++) {
-         console.log(i)
-         console.log(a[i])
-       }
-
-       let m = {
-         "mtt" : [
-           {
-             "name" : "m",
-             "po" : "2"
-           },
-           {
-             "name" : "t",
-             "po" : "2"
-           },
-           {
-             "name" : "t",
-             "po" : "e"
-           }
-         ]
-       }
-       let thisb = m.mtt;
-       let num = thisb.length;
-       for (let i = 0; i < num; i++) {
-         let thisbb = thisb[i]
-         console.log(i)
-         console.log(thisbb)
-       }
- 
-
-    </script>
+  <canvas id="myCanvas" width="200" height="100"></canvas>
+  
 </body>
+  <script>
+    $(document).ready(function(){
+      var c=document.getElementById("myCanvas");
+var cxt=c.getContext("2d");
+var img=new Image()
+img.src="flower.png"
+cxt.drawImage(img,0,0);
+    })
+  
+  </script>
 
 </html>

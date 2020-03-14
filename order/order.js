@@ -8,6 +8,13 @@ $(document).ready(function() {
         $(this).parents(".pop_up").hide();
     })
 
+    //评分滑动星星效果QAQ
+    $(".star").click(function(){
+        $(".select").removeClass("select");
+        $(this).addClass("select");
+        $(this).prevAll().addClass("select");
+    });
+
     //状态栏切换效果
     $(".state").bind("click",function() {
         $(".focus").removeClass("focus");
@@ -54,10 +61,13 @@ $(document).ready(function() {
     // 加载页面
     //买书
     function buylist() {
+        //删除已经创建的图书元素
+        $("li").remove();
+
         //页面改变
         $("#buy_list").attr("class", "showing");
         $("#sell_list").attr("class", "other");
-            //线滑动
+          //线滑动
         let left = $(".showing").offset().left;
         $("#line_move").animate({ left: left }, 500);
           //状态栏+主题内容切换
@@ -67,11 +77,17 @@ $(document).ready(function() {
         $("#buy_all").addClass("focus");
         
         $.ajax({
-            type: "GET",
-            url: "/buyorder",
+            type: "POST",
+            url: "http://pn.forseason.vip/order/info",
+            data: JSON.stringify({
+                "type" : "buy"
+            }),
             headers: {
-                "content-type": "application/json"
+                "Content-type" : "application/json"
             },
+            xhrFields: {
+                withCredentials: true
+             },
             success: function(books) {
                 console.log("买书order" + books)
                 if (books == null) {
@@ -85,43 +101,45 @@ $(document).ready(function() {
                         for (let i = 0; i < orderNum; i++) {
                             let thisbook = orders[i]; //此订单的对象
                             console.log(thisbook)
-                            let newBook = $(`<li id=${thisbook.order_Id}></li>`);
-                            let imgDiv = $("<div class='first_column'></div>");
-                            let img = $(`<img height='110px' width='110px' alt='无法显示' src='${thisbook.photo}'>`);
-                            let detailDiv = $("<div class='details'></div>");
-                            let nameSpan = $(`<span class='bookname'>${thisbook.bName}</span>`);
-                            let priceSpan = $(`<span class='price'>￥${thisbook.price}</span>`);
-                            let stateSpan = $("<span class='bookstate'></span>");
-                            let button = $("<input class='shape' type='button' value='按钮'>");
-    
-                            $("#buyall_content").append(newBook);
-                            $(newBook).append(imgDiv);
-                            $(newBook).append(detailDiv);
-                            $(imgDiv).append(img);
-                            $(detailDiv).prepend(nameSpan);
-                            $(nameSpan).after(priceSpan);
-                            $(priceSpan).after(stateSpan);
-                            $(stateSpan).after(button);
                             
                             if (thisbook.status == 0) { //取消交易
-                                $(stateSpan).html("状态：可购买");
-                                $(button).attr("value", "查看图书");
-                                $(button).addClass("buy_check_btn");
-                                $(newBook).addClass("available_buy");
+                                let status = '状态：可购买';
+                                let value = '查看图书';
+                                let btn_class = 'btn buy_check_btn';
+                                let book_class = 'available_buy';
                             } else if (thisbook.status == 1) { //交易中
-                                $(stateSpan).html("状态：交易中");
-                                $(button).attr("value", "不买这本");
-                                $(button).addClass("buy_notthis_btn");
-                                $(newBook).addClass("marketing_buy");
+                                let status = '状态：交易中';
+                                let value = '不买这本';
+                                let btn_class = 'btn buy_notthis_btn';
+                                let book_class = 'marketing_buy';
                             } else if (thisbook.status == 2) { //已完成，未评分
-                                $(stateSpan).html("状态：可评分");
-                                $(button).attr("value", "评分");
-                                $(button).addClass("buy_mark_btn");
-                                $(newBook).addClass("done_buy");
+                                let status = '状态：可评分';
+                                let value = '评分';
+                                let btn_class = 'btn buy_mark_btn';
+                                let book_class = 'done_buy';
                             } else if (thisbook.status == 3) { //已完成，已评分
-                                $(newBook).addClass("done_buy");
-                                $(button).detach();
-                                $(stateSpan).html("状态： 已评分 ");
+                                let status = '状态：已评分';
+                                let value = '按钮';
+                                let btn_class = 'btn'
+                                let book_class = 'done_buy';                               
+                            }
+                            
+                            $("#buyall_content").append(`
+                              <li id=${thisbook.order_Id} class=${book_class}>
+                                  <div class='first_column'>
+                                    <img alt='图片丢了' src='${thisbook.photo}'>
+                                  </div>
+                                  <div class='details'>
+                                    <span class='bookname'>${thisbook.bName}></span>
+                                    <span class='price'>￥${thisbook.price}></span>
+                                    <span class='bookstate'>${status}</span>
+                                    <input class=${btn_class} type='button' value=${value}>
+                                  </div>
+                              </li>
+                            `)
+
+                            if(thisbook.status == 3) {
+                                $(`#${thisbook.order_Id}`).find(".btn").detach();
                             }
                         }                   
                     }//end else
@@ -134,27 +152,24 @@ $(document).ready(function() {
                         for (let i = 0; i < withdrawNum; i++) {
                             let thisbook = withdraws[i]; //此订单的对象
                             console.log(thisbook)
-                            let newBook = $("<li class='none_buy'></li>");
-                            let imgDiv = $("<div class='first_column'></div>");
-                            let img = $(`<img height='110px' width='110px' alt='无法显示' src='${thisbook.photo}'>`);
-                            let detailDiv = $("<div class='details'></div>");
-                            let nameSpan = $(`<span class='bookname'>${thisbook.bName}</span>`);
-                            let priceSpan = $(`<span class='price'>￥${thisbook.price}</span>`);
-                            let stateSpan = $("<span class='bookstate'>该书已被卖家下架</span>");
-                          
-                            $("#buyall_content").append(newBook);
-                            $(newBook).append(imgDiv);
-                            $(newBook).append(detailDiv);
-                            $(imgDiv).append(img);
-                            $(detailDiv).prepend(nameSpan);
-                            $(nameSpan).after(priceSpan);
-                            $(priceSpan).after(stateSpan);
+                            $("#buyall_content").append(`
+                              <li class='none_buy'>
+                                <div class='first_column'>
+                                  <img alt='图片丢了' src='${thisbook.photo}'>
+                                </div>
+                                <div class='details'>
+                                  <span class='bookname'>${thisbook.bName}></span>
+                                  <span class='price'>￥${thisbook.price}></span>
+                                  <span class='bookstate'>该书已被卖家下架</span>
+                                </div>
+                              </li>
+                            `)
                         }
                     }//end else         
                 }//end else
             },
             error(XMLHttpRequest, textStatus, errorThrown) {
-                $("#error_pop").show();
+                confirm("加载失败！")
                 console.log(XMLHttpRequest)
                 console.log(textStatus)
                 console.log(errorThrown)
@@ -170,6 +185,9 @@ $(document).ready(function() {
 
     //卖书
     $("#sell_list").off("click").on("click", function() {
+        //清理已有图书div
+        $("li").remove();
+
         //页面改变
         $("#buy_list").attr("class", "other");
         $("#sell_list").attr("class", "showing");
@@ -183,60 +201,71 @@ $(document).ready(function() {
         $("#sell_all").addClass("focus");
 
         $.ajax({
-            type: "GET",
-            url: "/sellorder",
+            type: "POST",
+            url: "http://pn.forseason.vip/order/info",
+            xhrFields: {
+                withCredentials: true
+             },
+            crossDomain: true,
             headers: {
-                "content-type": "application/json"
+                "Content-type" : "application/json"
             },
-            success: function(orders) {
-                console.log("卖书order" + orders)
-                if (orders == null) {
+            data: JSON.stringify({
+                "type" : "buy"
+            }),
+            success: function(books) {
+                console.log("卖书order" + books)
+                if (books == null) {
                     console.log("卖书没有数据")
                 } else {
+                    let orders = books.sellorder;
                     let orderNum = orders.length;
                     for (let i = 0; i < orderNum; i++) {
                         let thisbook = orders[i]; //此订单的对象
                         console.log("thisbook"+thisbook)
-                        let newBook = $(`<li id='${thisbook.book_Id}'></li>`);
-                        let imgDiv = $("<div class='first_column'></div>");
-                        let img = $(`<img height='110px' width='110px' alt='无法显示' src='${thisbook.photo}'>`);
-                        let detailDiv = $("<div class='details'></div>");
-                        let nameSpan = $(`<span class='bookname'>${thisbook.bName}</span>`);
-                        let priceSpan = $(`<span class='price'>￥${thisbook.price}</span>`);
-                        let stateSpan = $("<span class='bookstate'></span>");
-                        let button = $("<input class='shape' type='button' value='按钮'>");
 
-                        $("#sellall_content").append(newBook);
-                        $(newBook).append(imgDiv);
-                        $(newBook).append(detailDiv);
-                        $(imgDiv).append(img);
-                        $(detailDiv).prepend(nameSpan);
-                        $(nameSpan).after(priceSpan);
-                        $(priceSpan).after(stateSpan);
-                        $(stateSpan).after(button);
-                       
                         if (thisbook.status == 1) { //可购买
-                            $(stateSpan).html("状态：可购买");
-                            $(button).attr("value", "下架");
-                            $(button).addClass("sell_withdraw_btn");
-                            $(newBook).addClass("available_sell");
+                            let status = '状态：可购买';
+                            let value = '下架';
+                            let btn_class = 'sell_withdraw_btn';
+                            let book_class = 'available_sell';
                         } else if (thisbook.status == 2) { //交易中
-                            $(stateSpan).html("状态：交易中");
-                            $(button).attr("value", "确认交易成功");
-                            $(button).addClass("sell_ensure_btn");
-                            $(newBook).addClass("marketing_sell");
-                            let button2 = $("<input class='shape sell_resell_btn' type='button' value='卖给别人'>");
-                            $(button).after(button2);
+                            let status = '状态：交易中';
+                            let value = '确认交易成功';
+                            let btn_class = 'sell_ensure_btn';
+                            let book_class = 'marketing_sell';
                         } else if (thisbook.status == 3) { //已售出
-                            $(stateSpan).html("状态：已售出");
-                            $(button).detach();
-                            $(newBook).addClass("done_sell");
+                            let status = '状态：已售出';
+                            let value = '按钮'
+                            let book_class = 'done_sell';
+                        }
+
+                        $("#sellall_content").append(`
+                          <li id=${thisbook.book_Id} class=${book_class}>
+                            <div class='first_column'>
+                              <img alt='图片丢了' src='${thisbook.photo}'>
+                            </div>
+                            <div class='details'>
+                              <span class='bookname'>${thisbook.bName}></span>
+                              <span class='price'>￥${thisbook.price}></span>
+                              <span class='bookstate'>${status}</span>
+                              <input class=${btn_class} type='button' value=${value}>
+                            </div>
+                          </li>
+                        `)     
+                        
+                        if (thisbook.status == 2) {
+                            $(`#${thisbook.book_Id}`).find(".btn").after(`
+                              <input class='shape sell_resell_btn' type='button' value='卖给别人'>
+                            `)
+                        } else if (thisbook.status == 3) {
+                            $(`#${thisbook.book_Id}`).find(".btn").detach();
                         }
                     }
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("#error_pop").show();
+                confirm("加载失败！")
                 console.log(XMLHttpRequest)
                 console.log(textStatus)
                 console.log(errorThrown)
@@ -256,23 +285,28 @@ $(document).ready(function() {
         $("#notbuy_yes").off("click").on("click", function() {
             $.ajax({
                 type: "PUT",
-                url: `/buy/cancel/${orderId}/`,
+                url: "/order/cancel",
                 headers: {
-                    "content-type": "application/jason"
+                    "content-type": "application/json"
                 },
-                success: function() {
+                xhrFields: {
+                    withCredentials: true
+                 },
+                data: JSON.stringify({
+                    "type" : "sell",
+                    "order_id" : `${orderId}`,
+                }),
+                success: function(data) {
                     //关闭弹窗
                     $("#notbuy_pop").hide();
-                    //改变元素
-                    $(this_ele).find(".bookstate").html("状态：可购买");
-                    $(this_ele).find(".buy_notthis_btn").detach();
-                    let input = $("<input class='shape buy_check_btn' type='button' value='查看图书'>");
-                    $(this_ele).find(".bookstate").after(input);
-                    //改变书的状态
-                    $(this_ele).attr("class", "available_buy");
+                    confirm("取消成功！");
                 },
-                error: function() {
-                    $("#error_pop").show();
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#notbuy_pop").hide();
+                    confirm("取消失败！")
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
                 }
             })
         })
@@ -285,6 +319,8 @@ $(document).ready(function() {
         $("#mark_pop").show();
 
         let orderId = $(this_ele).attr("id");
+        let name = this_ele.find(".bookname").html();
+        $("#mark_bookname").html(`${name}`);
 
         $("img").click(function() {
             let $star = $(event.target);
@@ -300,33 +336,54 @@ $(document).ready(function() {
 
             $("#mark_btn").off("click").on("click", function() {
                 $.ajax({
-                    type: "POST",
-                    url: "/buy/score/",
+                    type: "PUT",
+                    url: "/user/credit",
                     headers: {
                         "content-type": "application/json"
                     },
+                    xhrFields: {
+                        withCredentials: true
+                     },
+                    dataType: "json",
                     data: JSON.stringify({
-                        order_Id: orderId,
-                        credit: marks
+                        "order_Id": `${orderId}`,
+                        "credit": `${marks}`
                     }),
-                    success: function() {
+                    success: function(data) {
                         //关闭弹窗
                         $("#mark_pop").hide();
                         //去掉评分按钮和状态
                         $(this_ele).find(".buy_mark_btn").detach();
                         $(this_ele).find(".bookstate").html(`您的评分为：${marks}分`);
                     },
-                    error: function() {
-                        $("#error_pop").show();
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $("#mark_pop").hide();
+                        confirm("评分失败！")
+                        console.log(XMLHttpRequest)
+                        console.log(textStatus)
+                        console.log(errorThrown)
                     }
                 })
             })
         })
     })
 
-    //查看图书
+    //点击“查看详情”查看图书
     $("#buyall_content").on("click", ".buy_check_btn", function() {
-        window.location.href = "url";
+        //设置localstorage
+        let book_id = $(this).parents("li").attr("id");
+        localStorage.setItem("book_id", `${book_id}`)
+        //跳转
+        window.location.href = "book_detail.html";
+    })
+
+    //点击图书图片查看图书
+    $(".content").on("click", "li img", function() {
+        //设置localstorage
+        let book_id = $(this).parents("li").attr("id");
+        localStorage.setItem("book_id", `${book_id}`)
+        //跳转
+        window.location.href = "book_detail.html";
     })
 
     //卖书
@@ -341,13 +398,19 @@ $(document).ready(function() {
         $("#ensure_yes").click(function() {
             $.ajax({
                 type: "PUT",
-                url: `/sellorder/sure/${bookId}/`,
-                success: function() {
+                url: "/order/success",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                xhrFields: {
+                    withCredentials: true
+                 },
+                data: JSON.stringify({
+                    "book_id" : `${bookId}`
+                }),
+                success: function(data) {
                     $("#ensure_pop").hide();
-                    //改变状态
-                    $(this_ele).find(".bookstate").html("状态：已售出");
-                    $(this_ele).find("input").detach();
-                    $(this_ele).attr("class", "done_sell");
+                    confirm("确认成功！")
                     //跳转页面
                     let page = $(".focus").attr("id");
                     if (page == "sell_marketing") {
@@ -357,9 +420,12 @@ $(document).ready(function() {
                         $("#sell_done").addClass("focus");
                     }
                 },
-                error: function(res) {
-                    console.log(res.responseText, res.status)
-                    $("#error_pop").show();
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#ensure_pop").hide();
+                    confirm("确认失败！")
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
                 }
             })
         })
@@ -375,14 +441,17 @@ $(document).ready(function() {
         $("#change_yes").click(function() {
             $.ajax({
                 type: "PUT",
-                url: `sell/cancell/${bookId}/`,
-                success: function() {
+                url: "/order/cancel",
+                data: JSON.stringify({
+                    "type" : "sell",
+                    "order_id" : `${bookId}`
+                }),
+                xhrFields: {
+                    withCredentials: true
+                 },
+                success: function(data) {
                     $("#change_pop").hide();
-                    $(this_ele).find(".bookstate").html("状态：可购买");
-                    $(this_ele).find("input").detach();
-                    let input = $("<input class='shape sell_withdraw_btn' type='button' value='下架'>");
-                    $(this_ele).find(".bookstate").after(input);
-                    $(this_ele).attr("class", "available_sell");
+                    confirm("取消成功！")
                     //跳转页面
                     let page = $(".focus").attr("id");
                     if (page == "sell_marketing") {
@@ -392,8 +461,12 @@ $(document).ready(function() {
                         $("#sell_available").addClass("focus");
                     }
                 },
-                error: function() {
-                    $("#error_pop").show();
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#change_pop").hide();
+                    confirm("取消失败！")
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
                 }
             })
         })
@@ -408,14 +481,27 @@ $(document).ready(function() {
         $("#withdraw_yes").off("click").on("click", function() {
             $.ajax({
                 type: "PUT",
-                url: `sell/withdraw/${bookId}/`,
-                success: function() {
+                url: "/book/back",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                data: JSON.stringify({
+                    "book_id" : `${bookId}`
+                }),
+                xhrFields: {
+                    withCredentials: true
+                 },
+                success: function(data) {
                     $("#withdraw_pop").hide();
                     $("#withdraw_succeed").show();
                     $(this_ele).remove();
                 },
-                error: function() {
-                    $("#error_pop").show();
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $("#withdraw_pop").hide();
+                    confirm("下架失败！")
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
                 }
             })
         })
