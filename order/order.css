@@ -14,15 +14,18 @@
   padding: 0;
 }
 
-body {
-  position: fixed;
+#tab, #line_move, .state_bar {
+  z-index: 3;
 }
 
+/*只显示买书*/
 #sell_content {
   display: none;
 }
+
 /*tab栏*/
 #tab {
+  position: fixed;
   height: 0.6rem;
   font-family: '黑体 bold';
   background: #28AEFA;
@@ -53,6 +56,9 @@ body {
 
 /*状态栏*/
 .state_bar {
+  position: fixed;
+  top: 0.6rem;
+  left: 0;
   height: 0.4rem;
   font-family: "Arial Normal";
   margin: 0;
@@ -60,6 +66,7 @@ body {
   width: 3.6rem;
   display: flex;
   justify-content: center;
+  background: #ffffff;
 }
 .state {
   margin: 0.1rem auto 0;
@@ -76,7 +83,7 @@ body {
   padding: 0;
 }
 
-/*导航栏*/
+/*下边栏*/
 #footbar {
   position: fixed;
   bottom: 0;
@@ -84,7 +91,7 @@ body {
   height: 0.53rem;
   font-size: 0.24rem;
 }
-#footbar a {
+#my, #home, #order {
   display: block;
   float: left;
   text-decoration: none;
@@ -105,10 +112,12 @@ body {
 /*主体内容*/
 /*整体*/
 .content {
+  position: relative;
+  top: 1rem;
   margin: 0;
   display: grid;
   grid-template-rows: repeat(3, 1.7rem);
-  overflow: auto;
+  z-index: 0;
 }
 ul {
   padding-left: 0;
@@ -117,7 +126,7 @@ ul {
   width: 3rem;
   height: 1.7rem;
   margin: auto;
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
   list-style: none;
 }
 
@@ -141,26 +150,26 @@ li img {
   position: relative;
   top: -0.08rem;
 }
+
 /*按钮*/
 .btn {
   float: left;
   height: 0.24rem;
+  width: 0.6rem;
   border: 1px solid #28AEFA;
   border-radius: 5px;
   background: #28AEFA;
   color: #ffffff;
   font-size: 0.15rem;
   margin-right: 0.05rem;
-  margin-top: 0.05rem;
+  margin-top: 0.1rem;
 }
+
 .sell_ensure_btn {
   width: 0.91rem;
 }
 .sell_resell_btn, .buy_notthis_btn, .buy_check_btn, .buy_mark_btn {
   width: 0.66rem;
-}
-.sell_withdraw_btn {
-  width: 0.5rem;
 }
 
 /*文字设定*/
@@ -198,11 +207,11 @@ img {
 
 /*"不再购买"弹窗*/
 #notbuy_pop {
-  position: absolute;
+  position: fixed;
   left: 0.63rem;
   top: 2.5rem;
   width: 2.43rem;
-  height: 1.15rem;
+  height: 1.5rem;
   border: 1px solid #000000;
   border-radius: 5px;
   background: #ffffff;
@@ -244,7 +253,7 @@ img {
 
 /*“评分”弹框*/
 #mark_pop {
-  position: absolute;
+  position: fixed;
   left: 0.3rem;
   top: 2.2rem;
   width: 3rem;
@@ -302,7 +311,7 @@ img {
 
 /*卖书列表弹窗公共*/
 .sell_pop {
-  position: absolute;
+  position: fixed;
   left: 0.24rem;
   top: 2.35rem;
   width: 3rem;
@@ -331,7 +340,7 @@ img {
 }
 /*下架成功 弹窗*/
 #withdraw_succeed {
-  position: absolute;
+  position: fixed;
   left: 0.81rem;
   top: 2.21rem;
   width: 1.85rem;
@@ -355,8 +364,7 @@ img {
 /*按钮*/
 input[type="button"] {
   outline: none;
-  font-size: 0.15rem;
 }
-input[type="button"]:hover {
-  background: rgb(17, 160, 185);
+input[type="button"]:active {
+  background: rgb(7, 148, 190);
 }

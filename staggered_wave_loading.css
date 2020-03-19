@@ -13,10 +13,11 @@ body {
 
 .dot {
     position: relative;
-    width: 2em;
-    height: 2em;
-    margin: 0.8em;
+    width: 3em;
+    height: 3em;
+    margin: 0em;
     border-radius: 50%;
+    text-align: center;
 }
 
 .dot::before {
