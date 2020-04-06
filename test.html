@@ -4,22 +4,22 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html"; charset="utf-8">
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 </head>
 
 <body>
-  <canvas id="myCanvas" width="200" height="100"></canvas>
   
 </body>
   <script>
-    $(document).ready(function(){
-      var c=document.getElementById("myCanvas");
-var cxt=c.getContext("2d");
-var img=new Image()
-img.src="flower.png"
-cxt.drawImage(img,0,0);
-    })
-  
+    function sayHiBye(firstName, lastName) {
+
+        // 辅助嵌套函数使用如下
+        function getFullName() {
+         return firstName + " " + lastName;
+        }
+    }
+
+    console.log( "Hello, " + sayHiBye() );
+    console.log( "Bye, " + sayHiBye()() );
   </script>
 
 </html>

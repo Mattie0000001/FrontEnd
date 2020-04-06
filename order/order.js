@@ -8,13 +8,6 @@ $(document).ready(function() {
         $(this).parents(".pop_up").hide();
     })
 
-    //评分滑动星星效果QAQ
-    $(".star").click(function() {
-        $(".select").removeClass("select");
-        $(this).addClass("select");
-        $(this).prevAll().addClass("select");
-    });
-
     //状态栏切换效果
     $(".state").bind("click", function() {
         $(".focus").removeClass("focus");
@@ -78,7 +71,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://pn.forseason.vip/order/info",
+            url: "/order/info",
             xhrFields: {
                 withCredentials: true
             },
@@ -96,6 +89,8 @@ $(document).ready(function() {
                         for (let i = 0; i < orderNum; i++) {
                             let thisbook = orders[i]; //此订单的对象
                             console.log(thisbook)
+
+                            sessionStorage.setItem(`${thisbook.book_id}`, `${thisbook.order_Id}`);
 
                             let status, value, btn_class, book_class;
                             if (thisbook.status == 0) { //取消交易
@@ -121,9 +116,9 @@ $(document).ready(function() {
                             }
 
                             $("#buyall_content").append(`
-                              <li id=${thisbook.order_Id} class=${book_class}>
+                              <li id=${thisbook.book_id} class=${book_class}>
                                   <div class='first_column'>
-                                    <img alt='图片丢了' src='${thisbook.photo}'>
+                                    <img alt='图片丢了' src='../${thisbook.photo}'>
                                   </div>
                                   <div class='details'>
                                     <span class='bookname'>${thisbook.bName}</span>
@@ -135,9 +130,9 @@ $(document).ready(function() {
                             `)
 
                             if (thisbook.status == 3) {
-                                $(`#${thisbook.order_Id}`).find(".btn").detach();
+                                $(`#${thisbook.book_id}`).find(".btn").detach();
                             }
-                        }
+                        }//end for
                     } //end else
 
                     if (books.withdraw == null) {
@@ -149,9 +144,9 @@ $(document).ready(function() {
                             let thisbook = withdraws[i]; //此订单的对象
                             console.log(thisbook)
                             $("#buyall_content").append(`
-                              <li class='none_buy'>
+                              <li id=${thisbook.book_Id} class='none_buy'>
                                 <div class='first_column'>
-                                  <img alt='图片丢了' src='${thisbook.photo}'>
+                                  <img alt='图片丢了' src='../${thisbook.photo}'>
                                 </div>
                                 <div class='details'>
                                   <span class='bookname'>${thisbook.bName}</span>
@@ -197,7 +192,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://pn.forseason.vip/order/info",
+            url: "/order/info",
             xhrFields: {
                 withCredentials: true
             },
@@ -237,15 +232,15 @@ $(document).ready(function() {
                             $("#sellall_content").append(
                                 `<li id='${thisbook.book_Id}' class='${book_class}'>
                                     <div class='first_column'>
-                                        <img alt='图片丢了' src='${thisbook.photo}'>
+                                        <img alt='图片丢了' src='../${thisbook.photo}'>
                                     </div>
                                     <div class='details'>
                                         <span class='bookname'>${thisbook.bName}</span>
                                         <span class='price'>￥${thisbook.price}</span>
                                         <span class='bookstate'>${status}</span>
-                                        <input type='button' class='btn ${btn_class}' value=${value} onClick='check()'>
+                                        <input type='button' class='btn ${btn_class}' value=${value}>
                                     </div>
-                                    </li>`
+                                </li>`
                             )
 
                             if (thisbook.status == 2) {
@@ -255,7 +250,7 @@ $(document).ready(function() {
                             } else if (thisbook.status == 3) {
                                 $(`#${thisbook.book_Id}`).find("input[type='button']").detach();
                             }
-                        } //end 判断是不是下架书记的else
+                        } //end 判断是不是下架的else
                     } //end判断是不是空的else
 
                 } //end while    
@@ -275,13 +270,13 @@ $(document).ready(function() {
     $("#buyall_content").on("click", ".buy_notthis_btn", function() {
         let this_ele = $(this).parents("li");
         $("#notbuy_pop").show();
-        let orderId = $(this_ele).attr("id");
+        let orderId = sessionStorage.getItem(`${$(this_ele).attr("id")}`) ;
 
         //点击确定按钮
         $("#notbuy_yes").off("click").on("click", function() {
             $.ajax({
                 type: "PUT",
-                url: "http://pn.forseason.vip/order/cancel",
+                url: "/order/cancel",
                 xhrFields: {
                     withCredentials: true
                 },
@@ -314,10 +309,10 @@ $(document).ready(function() {
     //评分
     $("#buyall_content").on("click", ".buy_mark_btn", function() {
         let this_ele = $(this).parents("li");
-        console.log(this_ele.attr("class"))
-        $("#mark_pop").show();
+        let orderId = sessionStorage.getItem(`${$(this_ele).attr("id")}`);
 
-        let orderId = $(this_ele).attr("id");
+        $("#mark_pop").show();      
+        //让评分窗口显示书名
         let name = this_ele.find(".bookname").html();
         $("#mark_bookname").html(`${name}`);
 
@@ -338,7 +333,7 @@ $(document).ready(function() {
             $("#mark_btn").off("click").on("click", function() {
                 $.ajax({
                     type: "PUT",
-                    url: "http://pn.forseason.vip/user/credit",
+                    url: "/user/credit",
                     xhrFields: {
                         withCredentials: true
                     },
@@ -372,8 +367,8 @@ $(document).ready(function() {
         //设置localstorage
         let book_id = $(this).parents("li").attr("id");
         localStorage.setItem("book_id", `${book_id}`)
-            //跳转
-        window.location.href = "book_detail.html";
+        //跳转
+        window.location.href = "../book_detail/html/book_detail.html";
     })
 
     //点击图书图片查看图书
@@ -381,8 +376,8 @@ $(document).ready(function() {
         //设置localstorage
         let book_id = $(this).parents("li").attr("id");
         localStorage.setItem("book_id", `${book_id}`)
-            //跳转
-        window.location.href = "book_detail.html";
+        //跳转
+        window.location.href = "../book_detail/html/book_detail.html";
     })
 
     //卖书
@@ -397,7 +392,7 @@ $(document).ready(function() {
         $("#ensure_yes").click(function() {
             $.ajax({
                 type: "PUT",
-                url: "http://pn.forseason.vip/order/success",
+                url: "/order/success",
                 xhrFields: {
                     withCredentials: true
                 },
@@ -491,7 +486,7 @@ $(document).ready(function() {
         $("#withdraw_yes").off("click").on("click", function() {
             $.ajax({
                 type: "PUT",
-                url: "http://pn.forseason.vip/book/back",
+                url: "/book/back",
                 data: JSON.stringify({
                     "book_id": `${bookId}`
                 }),

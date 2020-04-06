@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>发布旧书</title>
+    <meta http-equiv="content-type" content="text/html" ; charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="./publish/publish.css">
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+
+<body>
+    <!--标题-->
+    <div id="title">
+      <img src="./publish/image/back.png">
+      <span >发布旧书</span>
+    </div>
+
+    <!--表单-->
+    <form id="main" method="POST">
+        <div class="two_letters">
+            <span>书名</span>
+            <input type="text" name="bName" id="bookName">
+        </div><br>
+
+        <div class="two_letters">
+            <span>价格</span>
+            <input type="text" name="price" id="price">
+        </div><br>
+
+        <div class="four_letters">
+            <span>适用专业</span>
+            <input type="text" name="major" id="major">
+        </div><br>
+
+        <div class="four_letters">
+            <span>适用年级</span>
+            <select id="grade" name="grade">
+                <option value="1">大一</option>
+                <option value="2">大二</option>
+                <option value="3">大三</option>
+                <option value="4">大四</option>
+            </select>
+        </div><br>
+
+        <div class="four_letters">
+            <span>新旧程度</span>
+            <select id="old" name="newold">
+                <option value="ten">全新</option>
+                <option value="eight">八成新</option>
+                <option value="six">六成新</option>
+            </select>
+        </div><br>
+
+        <div class="two_letters">
+            <span>校区</span>
+            <select id="locate" name="location">
+                <option value="1">大学城校区</option>
+                <option value="2">五山校区</option>
+                <option value="3">国际校区</option>
+            </select>
+        </div><br>
+
+        <div>
+            <span>详情描述(不超过200个字)</span>
+            <br><br>
+            <textarea id="describe" name="more"></textarea>
+        </div><br>
+
+        <div class="two_letters">
+            <span>照片</span>
+            <br>
+            <div id="upload_box">
+                <label for="upload">
+                    <img id="photo" src="./publish/image/upload.png">
+                 </label>
+            </div>
+            <input type="file" name="photo" id="upload" accept="image/*">
+        </div> 
+
+        <input type="button" value="提交" id="submit">
+
+    </form>
+
+    <!--end-->
+    <script src="./publish/publish.js"></script>
+</body>
+
+</html>
