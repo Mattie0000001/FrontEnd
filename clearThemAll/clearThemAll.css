@@ -1,0 +1,116 @@
+@media screen and (min-width: 800px) {
+  html {
+    font-size: 221.6px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  html {
+    font-size: 27.77vw;
+  }
+}
+
+body {
+  background:rgb(197, 145, 154);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: .35rem;
+  height: .35rem;
+}
+/*两栏布局*/
+#right {
+  float: right;
+  width: 40vw;
+  margin: 0;
+}
+#left {
+  float: left;
+  width: 55vw;
+  margin: 0;
+}
+
+/*统一样式*/
+.box {
+  font-size: .08rem;
+  text-align: center;
+}
+
+.btn {
+  margin: 0.04rem 0.03rem 0.04rem 0.04rem;
+  font-size: .08rem;
+  background: rgb(248, 172, 158);
+  color: aliceblue;
+  border-radius: 10px;
+  border-style: outset;
+  border-color: transparent;
+  width: .25rem;
+  height: .25rem;
+}
+
+#header {
+  color: white;
+  font-style: italic;
+  font-size: .08rem;
+  text-align: right;
+}
+
+#rules {
+  display: block;
+  color: black;
+  text-align: left;
+  font-size: .1rem;
+  padding: 1%;
+  height: .5rem;
+}
+
+#timeBox, #scoresBox, #beginBox{
+  width: .7rem;
+  height: .7rem;
+  font-size: .1rem;
+  color: aliceblue;
+  float: left;
+  border-radius: 3px;
+  border: 3px solid;
+  border-color: rgb(248, 172, 158);
+}
+
+#time, #scores {
+  background: rgb(248, 172, 158);
+  color: aliceblue;
+  border-radius: 10px;
+  border-style: outset;
+  border-color: transparent;
+  width: .4rem;
+  height: .3rem;
+  font-size: .15rem;
+}
+
+#container {
+  position: fixed;
+  display: grid;
+  grid-template-columns: repeat(5, .35rem);
+  grid-template-rows: repeat(5, .35rem);
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+#message{
+  display: none;
+  color: rgb(22, 113, 192);
+  font-size: .3rem;
+}
+
+#container :hover {
+  border: 2px solid black;
+}
+
+hr {
+  height: 1px;
+  border: 1px #000 solid;
+}
