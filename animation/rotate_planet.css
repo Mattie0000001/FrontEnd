@@ -1,0 +1,29 @@
+img {
+    width: 200px;
+    height: 200px;
+    animation: rotation 5s linear infinite;
+    animation-play-state: running;
+    -moz-animation-play-state: running;
+}
+img:hovered {
+    animation-play-state: paused;
+    -moz-animation-play-state:paused;
+}
+
+@keyframes rotation{
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(270deg);
+    }
+    100% {
+        tansform: rotate(360deg);
+    }
+}
