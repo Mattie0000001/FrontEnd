@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <script src="../vue.js"></script>
+</head>
+
+<style>
+    html {
+      font-size: 27.77vw;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /*文字部分*/
+    #story {
+      font-size: 0.15rem;
+      text-align: center;
+      position: relative;
+      top: 0.6rem;
+    }
+    .sentence {
+      margin-bottom: 0.1rem;
+    }
+    .continue {
+      margin-top: 0.4rem;
+    }
+    
+    /*星球*/
+    #planet {
+      position: fixed;
+      bottom: -0.4rem;
+      right: 0;    
+    }
+    #planet img {
+      width: 3.6rem;
+    }
+
+    .fade-enter {
+      opacity: 0;
+    }
+
+    .fade-enter-active {
+      transition: opacity 2s;
+    }
+
+    .fade-enter-to {
+      opacity: 1;
+    }
+    
+    #one {
+      transition-delay: 1s;
+    }
+
+    #two {
+      transition-delay: 2s;
+    }
+    #three {
+      transition-delay: 4s;
+    }
+    #four {
+      transition-delay: 6s;
+    }
+    #five {
+      transition-delay: 8s;
+    }
+    #six {
+      transition-delay: 10s;
+      margin-top: 0.4rem
+    }
+
+</style>
+
+<body>
+  <div>
+    <div id='story'>
+        <lines v-for='item in lines' :key='item.id' :infor='item'></lines>
+    </div>
+</div>
+
+<script>
+  Vue.component('lines', {
+    template: `
+      <transition name='fade' :appear=true duration='2s'>
+        <div class='sentence' :id='infor.id' v-html='infor.text'></div>
+      </transition>
+    `,
+    props: ['infor']
+    
+  })
+
+  new Vue ({
+    el: "#story",
+    data: {
+      show: false,
+      lines: [
+          {
+            text: '我曾见过这世界<br>五彩缤纷',
+            id: 'one'
+          },
+          {
+            text: '我也曾见过这世界<br>阴沉灰暗',
+            id: 'two'
+          },
+          {
+            text: '一场疫情<br>让这个世界失去了原有的色彩',
+            id: 'three'
+          },
+          {
+            text: '一张船票 带领梯仔<br>飞向神秘的宇宙<br>穿越无尽的星空',
+            id: 'four'
+          },
+          {
+            text: '这一次<br>梯仔能否找回消逝的色彩<br>让这个世界回到最初',
+            id: 'five'
+          },
+          {
+            text: '点击继续...',
+            id: 'six'
+          }
+      ]
+    },
+    // mounted () {
+    //   setInterval( 'show = true', 1000);
+    // }
+  })
+</script>
+</body>
